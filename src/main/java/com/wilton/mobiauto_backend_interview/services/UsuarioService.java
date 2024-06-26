@@ -12,11 +12,12 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
-    public Usuario saveUsuario(Usuario usuario) {
+    public String saveUsuario(Usuario usuario) {
         Usuario usuarioRepetido = usuarioRepository.getByEmail(usuario.getEmail());
         if (usuarioRepetido != null) {
-            return usuarioRepetido;
+            return "Já existe um usuário com esse e-mail.";
         }
-        return usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
+        return "Usuário cadastrado com sucesso.";
     }
 }

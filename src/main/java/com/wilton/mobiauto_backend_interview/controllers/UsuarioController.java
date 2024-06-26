@@ -30,7 +30,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios")
-    Usuario newUsuario(@RequestBody Usuario newUsuario) {
+    String newUsuario(@RequestBody Usuario newUsuario) {
         return usuarioService.saveUsuario(newUsuario);
     }
 }
