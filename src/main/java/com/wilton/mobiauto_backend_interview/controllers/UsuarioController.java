@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wilton.mobiauto_backend_interview.entities.Usuario;
-import com.wilton.mobiauto_backend_interview.repositories.UsuarioRepository;
-import com.wilton.mobiauto_backend_interview.services.UsuarioService;
+import com.wilton.mobiauto_backend_interview.entities.User;
+import com.wilton.mobiauto_backend_interview.repositories.UserRepository;
+import com.wilton.mobiauto_backend_interview.services.UserService;
 
 @RestController
 public class UsuarioController {
     
-    private final UsuarioRepository repository;
+    private final UserRepository repository;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UserService userService;
 
-    UsuarioController(UsuarioRepository repository) {
+    UsuarioController(UserRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping("/usuarios")
-    List<Usuario> all() {
+    List<User> all() {
         return repository.findAll();
     }
 
     @PostMapping("/usuarios")
-    String newUsuario(@RequestBody Usuario newUsuario) {
-        return usuarioService.saveUsuario(newUsuario);
+    String newUsuario(@RequestBody User newUser) {
+        return userService.saveUser(newUser);
     }
 }
