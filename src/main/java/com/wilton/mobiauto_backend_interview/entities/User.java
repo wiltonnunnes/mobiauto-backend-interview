@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 
 import java.util.Set;
 
+import com.wilton.mobiauto_backend_interview.validations.EmailConstraint;
+
 @Entity(name = "user")
 @Table(name = "users")
 public class User {
@@ -22,6 +24,7 @@ public class User {
     private String name;
 
     @Column(unique = true)
+    @EmailConstraint
     private String email;
 
     private String password;
