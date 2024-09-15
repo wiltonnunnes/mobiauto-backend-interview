@@ -1,9 +1,17 @@
 package com.wilton.mobiauto_backend_interview;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -25,11 +33,29 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${jwt.public.key}")
     private RSAPublicKey key;
 
-    @Value("${jwt.private.key}")
     private RSAPrivateKey priv;
+
+    public SecurityConfig() {
+        try {
+            File publicKeyFile = new File("public.key");
+            byte[] publicKeyBytes = Files.readAllBytes(publicKeyFile.toPath());
+
+            File privateKeyFile = new File("private.key");
+            byte[] privateKeyBytes = Files.readAllBytes(privateKeyFile.toPath());
+
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(publicKeyBytes);
+            key = (RSAPublicKey) keyFactory.generatePublic(publicKeySpec);
+
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
+            priv = (RSAPrivateKey) kf.generatePrivate(privateKeySpec);
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
