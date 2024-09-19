@@ -17,8 +17,7 @@ import com.wilton.mobiauto_backend_interview.validations.EmailConstraint;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

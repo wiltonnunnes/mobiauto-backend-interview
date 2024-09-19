@@ -2,7 +2,6 @@ package com.wilton.mobiauto_backend_interview;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.security.KeyPair;

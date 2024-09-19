@@ -31,7 +31,7 @@ public class UserController {
         return repository.findAll();
     }
 
-    @PostMapping("/usuarios")
+    @PostMapping("/register")
     String newUser(@RequestBody @Valid User newUser) {
         return userService.saveUser(newUser);
     }
