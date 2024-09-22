@@ -7,10 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.util.Set;
 
 @Entity(name = "revenda")
 @Table(name = "revendas")
@@ -25,9 +22,6 @@ public class Revenda {
     private String cnpj;
 
     private String nome;
-
-    @OneToMany(mappedBy = "revenda")
-    private Set<Associacao> associacoes;
 
     public Revenda() {}
 
@@ -55,11 +49,4 @@ public class Revenda {
         this.id = id;
     }
 
-    public Set<Associacao> getAssociacoes() {
-        return associacoes;
-    }
-
-    public void setAssociacoes(Set<Associacao> associacoes) {
-        this.associacoes = associacoes;
-    }
 }
