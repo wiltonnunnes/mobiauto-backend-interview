@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wilton.mobiauto_backend_interview.dtos.UserDto;
 import com.wilton.mobiauto_backend_interview.entities.User;
 import com.wilton.mobiauto_backend_interview.repositories.UserRepository;
 import com.wilton.mobiauto_backend_interview.services.UserService;
@@ -26,13 +28,14 @@ public class UserController {
         this.repository = repository;
     }
 
-    @GetMapping("/usuarios")
+    @GetMapping("/users")
     List<User> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/register")
-    String newUser(@RequestBody @Valid User newUser) {
+    @PostMapping("/registration")
+    String newUser(@RequestBody @Valid UserDto userDto) {
+        User newUser = new User(userDto.getName(), userDto.getEmail(), userDto.getPassword());
         return userService.saveUser(newUser);
     }
 }
