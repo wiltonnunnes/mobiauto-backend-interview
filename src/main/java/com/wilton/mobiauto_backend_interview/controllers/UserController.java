@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,8 +36,15 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    String newUser(@RequestBody @Valid UserDto userDto) {
+    public ResponseEntity<String> newUser(@RequestBody @Valid UserDto userDto, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            result.getAllErrors().forEach(error -> {
+                errorMessage.append(error.getDefaultMessage()).append("; ");
+            });
+            return ResponseEntity.badRequest().body(errorMessage.toString());
+        }
         User newUser = new User(userDto.getName(), userDto.getEmail(), userDto.getPassword());
-        return userService.saveUser(newUser);
+        return ResponseEntity.ok(userService.saveUser(newUser));
     }
 }
