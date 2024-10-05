@@ -19,13 +19,12 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     
     public String saveUser(User user) {
-        Optional<User> optional = userRepository.findByEmail(user.getEmail());
-        if (optional.isPresent()) {
-            return "Já existe um usuário com esse e-mail";
-        }
-
         user.setSenha(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "Usuário cadastrado com sucesso";
+    }
+
+    public boolean userExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

@@ -9,4 +9,6 @@ import com.wilton.mobiauto_backend_interview.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     public Optional<User> findByEmail(String email);
+
+    public boolean existsByEmail(String email);
 }

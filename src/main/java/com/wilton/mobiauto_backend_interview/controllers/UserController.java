@@ -5,12 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wilton.mobiauto_backend_interview.dtos.UserDto;
@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<String> newUser(@RequestBody @Valid UserDto userDto, BindingResult result) {
+    public ResponseEntity<String> newUser(@Valid @RequestBody UserDto userDto, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
             result.getAllErrors().forEach(error -> {
@@ -44,6 +44,11 @@ public class UserController {
             });
             return ResponseEntity.badRequest().body(errorMessage.toString());
         }
+
+        if (userService.userExists(userDto.getEmail())) {
+            return new ResponseEntity<>("Já existe um usuário com esse e-mail", HttpStatus.CONFLICT);
+        }
+
         User newUser = new User(userDto.getName(), userDto.getEmail(), userDto.getPassword());
         return ResponseEntity.ok(userService.saveUser(newUser));
     }
