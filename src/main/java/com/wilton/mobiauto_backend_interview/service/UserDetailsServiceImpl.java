@@ -1,12 +1,12 @@
-package com.wilton.mobiauto_backend_interview.services;
+package com.wilton.mobiauto_backend_interview.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.wilton.mobiauto_backend_interview.entities.UserAuthenticated;
-import com.wilton.mobiauto_backend_interview.repositories.UserRepository;
+import com.wilton.mobiauto_backend_interview.entity.UserAuthenticated;
+import com.wilton.mobiauto_backend_interview.repository.UserRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {

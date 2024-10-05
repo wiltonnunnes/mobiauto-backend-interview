@@ -1,4 +1,4 @@
-package com.wilton.mobiauto_backend_interview.controllers;
+package com.wilton.mobiauto_backend_interview.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wilton.mobiauto_backend_interview.dtos.AuthResponseDto;
-import com.wilton.mobiauto_backend_interview.dtos.LoginDto;
-import com.wilton.mobiauto_backend_interview.services.AuthService;
+import com.wilton.mobiauto_backend_interview.dto.AuthResponseDto;
+import com.wilton.mobiauto_backend_interview.dto.LoginDto;
+import com.wilton.mobiauto_backend_interview.service.AuthService;
 
 @RestController
 @RequestMapping("/auth")

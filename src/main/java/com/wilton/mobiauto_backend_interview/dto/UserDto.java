@@ -1,9 +1,10 @@
-package com.wilton.mobiauto_backend_interview.dtos;
+package com.wilton.mobiauto_backend_interview.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.wilton.mobiauto_backend_interview.validation.EmailConstraint;
+import com.wilton.mobiauto_backend_interview.validation.StrongPassword;
 
-import com.wilton.mobiauto_backend_interview.validations.EmailConstraint;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class UserDto {
     
@@ -11,12 +12,21 @@ public class UserDto {
     @NotEmpty
     private String name;
 
-    @NotNull
-    @NotEmpty
+    @StrongPassword
     private String password;
 
     @EmailConstraint
     private String email;
+
+    private String confirmPassword;
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
     public String getEmail() {
         return email;

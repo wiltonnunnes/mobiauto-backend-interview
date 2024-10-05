@@ -1,6 +1,6 @@
-package com.wilton.mobiauto_backend_interview.entities;
+package com.wilton.mobiauto_backend_interview.entity;
 
-import com.wilton.mobiauto_backend_interview.validations.CNPJConstraint;
+import com.wilton.mobiauto_backend_interview.validation.CNPJConstraint;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

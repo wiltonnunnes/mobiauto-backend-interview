@@ -1,4 +1,4 @@
-package com.wilton.mobiauto_backend_interview.entities;
+package com.wilton.mobiauto_backend_interview.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

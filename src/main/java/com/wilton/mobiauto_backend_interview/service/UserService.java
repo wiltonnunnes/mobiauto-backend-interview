@@ -1,4 +1,4 @@
-package com.wilton.mobiauto_backend_interview.services;
+package com.wilton.mobiauto_backend_interview.service;
 
 import java.util.Optional;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wilton.mobiauto_backend_interview.entities.User;
-import com.wilton.mobiauto_backend_interview.repositories.UserRepository;
+import com.wilton.mobiauto_backend_interview.entity.User;
+import com.wilton.mobiauto_backend_interview.repository.UserRepository;
 
 @Service
 public class UserService {

@@ -1,9 +1,9 @@
-package com.wilton.mobiauto_backend_interview.validations;
-
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+package com.wilton.mobiauto_backend_interview.validation;
 
 import java.util.regex.*;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class CNPJValidator implements ConstraintValidator<CNPJConstraint, String> {
 

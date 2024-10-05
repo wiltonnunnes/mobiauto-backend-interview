@@ -1,4 +1,4 @@
-package com.wilton.mobiauto_backend_interview.services;
+package com.wilton.mobiauto_backend_interview.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.wilton.mobiauto_backend_interview.config.JwtTokenProvider;
-import com.wilton.mobiauto_backend_interview.dtos.LoginDto;
+import com.wilton.mobiauto_backend_interview.dto.LoginDto;
 
 @Service
 public class AuthServiceImpl implements AuthService {

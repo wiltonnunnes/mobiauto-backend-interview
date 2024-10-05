@@ -1,6 +1,6 @@
-package com.wilton.mobiauto_backend_interview.dtos;
+package com.wilton.mobiauto_backend_interview.dto;
 
-import com.wilton.mobiauto_backend_interview.validations.CNPJConstraint;
+import com.wilton.mobiauto_backend_interview.validation.CNPJConstraint;
 
 public class RevendaDTO {
     

@@ -1,4 +1,4 @@
-package com.wilton.mobiauto_backend_interview.dtos;
+package com.wilton.mobiauto_backend_interview.dto;
 
 public class LoginDto {
     
