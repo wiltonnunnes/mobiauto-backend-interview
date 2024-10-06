@@ -3,13 +3,11 @@ package com.wilton.mobiauto_backend_interview.dto;
 import com.wilton.mobiauto_backend_interview.validation.EmailConstraint;
 import com.wilton.mobiauto_backend_interview.validation.StrongPassword;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
-public class UserDto {
+public class UserCreationDTO {
     
-    @NotNull
-    @NotEmpty
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     @StrongPassword
