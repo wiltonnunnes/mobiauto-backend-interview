@@ -64,7 +64,7 @@ public class JwtTokenProvider {
         return false;
     }
 
-    public String generateSecretKey() {
+    private String generateSecretKey() {
         int length = 32;
 
         SecureRandom secureRandom = new SecureRandom();

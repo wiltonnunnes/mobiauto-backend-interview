@@ -1,6 +1,7 @@
 package com.wilton.mobiauto_backend_interview.controller;
 
 import java.util.List;
+import java.security.Principal;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wilton.mobiauto_backend_interview.dto.ErrorDTO;
 import com.wilton.mobiauto_backend_interview.dto.PostResponseDTO;
 import com.wilton.mobiauto_backend_interview.dto.UserCreationDTO;
+import com.wilton.mobiauto_backend_interview.dto.UserDTO;
 import com.wilton.mobiauto_backend_interview.entity.User;
 import com.wilton.mobiauto_backend_interview.repository.UserRepository;
 import com.wilton.mobiauto_backend_interview.service.UserService;
@@ -29,11 +32,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    UserController(UserRepository repository) {
+    public UserController(UserRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     List<User> all() {
         return repository.findAll();
     }
@@ -56,5 +59,11 @@ public class UserController {
 
         User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword());
         return new ResponseEntity<>(new PostResponseDTO(userService.saveUser(newUser), null), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/users/me")
+    public ResponseEntity<UserDTO> currentUserData(Principal principal) {
+        UserDTO userDTO = userService.getUser(principal.getName());
+        return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 }
