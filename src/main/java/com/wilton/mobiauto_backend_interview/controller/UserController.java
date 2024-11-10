@@ -17,9 +17,9 @@ import com.wilton.mobiauto_backend_interview.dto.ErrorDTO;
 import com.wilton.mobiauto_backend_interview.dto.PostResponseDTO;
 import com.wilton.mobiauto_backend_interview.dto.UserCreationDTO;
 import com.wilton.mobiauto_backend_interview.dto.UserDTO;
-import com.wilton.mobiauto_backend_interview.entity.Role;
 import com.wilton.mobiauto_backend_interview.entity.User;
 import com.wilton.mobiauto_backend_interview.service.UserService;
+import com.wilton.mobiauto_backend_interview.util.EmailService;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/users")
     List<UserDTO> all() {
@@ -51,7 +54,8 @@ public class UserController {
         }
 
         User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword());
-        return new ResponseEntity<>(new PostResponseDTO(userService.saveUser(newUser), null), HttpStatus.CREATED);
+        String message = userService.saveUser(newUser);
+        return new ResponseEntity<>(new PostResponseDTO(message, null), HttpStatus.CREATED);
     }
 
     @GetMapping("/users/me")
