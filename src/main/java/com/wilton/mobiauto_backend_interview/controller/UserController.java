@@ -55,6 +55,7 @@ public class UserController {
 
         User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword());
         String message = userService.saveUser(newUser);
+        emailService.sendSimpleMessage(newUser.getEmail(), "Your Verification Code", "768743");
         return new ResponseEntity<>(new PostResponseDTO(message, null), HttpStatus.CREATED);
     }
 
