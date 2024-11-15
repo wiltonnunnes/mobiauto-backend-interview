@@ -31,7 +31,7 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
     
-    public String saveUser(User user) {
+    public User saveUser(User user) {
         user.setSenha(passwordEncoder.encode(user.getPassword()));
         Optional<Role> userRole = roleRepository.findByName("ROLE_USER");
         if (userRole.isPresent())
@@ -40,8 +40,7 @@ public class UserService {
             Role role = roleRepository.save(new Role("ROLE_USER"));
             user.setRoles(Collections.singleton(role));
         }
-        userRepository.save(user);
-        return "Usuário cadastrado com sucesso";
+        return userRepository.save(user);
     }
 
     public boolean userExists(String email) {

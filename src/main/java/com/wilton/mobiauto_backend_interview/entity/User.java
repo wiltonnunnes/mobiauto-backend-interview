@@ -11,6 +11,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true)
@@ -46,12 +48,18 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    private String profilePhoto;
+
+    @Column(nullable = false)
+    private LocalDate birthday;
+
     public User() {}
 
-    public User(String name, String email, String password) {
+    public User(String name, String email, String password, LocalDate birthday) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.birthday = birthday;
     }
 
     public Long getId() {
@@ -108,6 +116,22 @@ public class User {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
 }

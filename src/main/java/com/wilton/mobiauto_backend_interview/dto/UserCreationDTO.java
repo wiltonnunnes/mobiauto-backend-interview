@@ -1,5 +1,8 @@
 package com.wilton.mobiauto_backend_interview.dto;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wilton.mobiauto_backend_interview.validation.EmailConstraint;
 import com.wilton.mobiauto_backend_interview.validation.StrongPassword;
 
@@ -17,6 +20,17 @@ public class UserCreationDTO {
     private String email;
 
     private String confirmPassword;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
     public String getConfirmPassword() {
         return confirmPassword;
