@@ -34,6 +34,8 @@ public class User {
 
     private String password;
 
+    private String username;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "users_roles",
@@ -50,16 +52,18 @@ public class User {
 
     private String profilePhoto;
 
+    /* 
     @Column(nullable = false)
     private LocalDate birthday;
+    */
 
     public User() {}
 
-    public User(String name, String email, String password, LocalDate birthday) {
+    public User(String name, String email, String password, String username) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.birthday = birthday;
+        this.username = username;
     }
 
     public Long getId() {
@@ -126,12 +130,22 @@ public class User {
         this.profilePhoto = profilePhoto;
     }
 
+    /* 
     public LocalDate getBirthday() {
         return birthday;
     }
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+    */    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

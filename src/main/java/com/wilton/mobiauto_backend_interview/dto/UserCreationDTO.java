@@ -21,9 +21,22 @@ public class UserCreationDTO {
 
     private String confirmPassword;
 
+    /* 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+    */
 
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /* 
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -31,6 +44,7 @@ public class UserCreationDTO {
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
+    */
 
     public String getConfirmPassword() {
         return confirmPassword;
