@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wilton.mobiauto_backend_interview.config.JwtTokenProvider;
 import com.wilton.mobiauto_backend_interview.dto.ErrorDTO;
 import com.wilton.mobiauto_backend_interview.dto.PostResponseDTO;
 import com.wilton.mobiauto_backend_interview.dto.UserCreationDTO;
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/users")
     List<UserDTO> all() {
@@ -60,8 +65,12 @@ public class UserController {
     }
 
     @GetMapping("/users/me")
-    public ResponseEntity<UserDTO> currentUserData(Principal principal) {
-        UserDTO userDTO = userService.getUser(principal.getName());
+    public ResponseEntity<UserDTO> currentUserData(Principal principal, @CookieValue(value = "accessToken", required = false) String accessToken) {
+        if (accessToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        String username = jwtTokenProvider.getUsername(accessToken);
+        UserDTO userDTO = userService.getUser(username);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 }

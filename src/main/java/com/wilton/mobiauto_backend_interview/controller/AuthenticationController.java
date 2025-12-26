@@ -12,6 +12,9 @@ import com.wilton.mobiauto_backend_interview.dto.AuthResponseDto;
 import com.wilton.mobiauto_backend_interview.dto.LoginDto;
 import com.wilton.mobiauto_backend_interview.service.AuthService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 public class AuthenticationController {
 
@@ -20,11 +23,16 @@ public class AuthenticationController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         String token = authService.login(loginDto);
 
         AuthResponseDto authResponseDto = new AuthResponseDto();
         authResponseDto.setAccessToken(token);
+
+        Cookie cookie = new Cookie("accessToken", token);
+        cookie.setHttpOnly(true);
+
+        response.addCookie(cookie);
 
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }
