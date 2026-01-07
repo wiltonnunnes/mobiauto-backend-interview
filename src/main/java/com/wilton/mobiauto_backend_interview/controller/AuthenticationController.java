@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wilton.mobiauto_backend_interview.config.JwtTokenProvider;
 import com.wilton.mobiauto_backend_interview.dto.AuthResponseDto;
 import com.wilton.mobiauto_backend_interview.dto.LoginDto;
 import com.wilton.mobiauto_backend_interview.service.AuthService;
@@ -21,6 +22,9 @@ public class AuthenticationController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
@@ -29,10 +33,15 @@ public class AuthenticationController {
         AuthResponseDto authResponseDto = new AuthResponseDto();
         authResponseDto.setAccessToken(token);
 
-        Cookie cookie = new Cookie("accessToken", token);
-        cookie.setHttpOnly(true);
+        Cookie accessTokenCookie = new Cookie("accessToken", token);
+        accessTokenCookie.setHttpOnly(true);
 
-        response.addCookie(cookie);
+        response.addCookie(accessTokenCookie);
+
+        String username = jwtTokenProvider.getUsername(token);
+        Cookie usernameCookie = new Cookie("userId", username);
+
+        response.addCookie(usernameCookie);
 
         return new ResponseEntity<>(authResponseDto, HttpStatus.OK);
     }
