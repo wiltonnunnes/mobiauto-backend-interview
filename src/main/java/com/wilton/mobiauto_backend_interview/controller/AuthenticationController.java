@@ -25,7 +25,7 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", maxAge = 3600)
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         String token = authService.login(loginDto);
