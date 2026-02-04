@@ -1,6 +1,9 @@
 package com.wilton.mobiauto_backend_interview.controller;
 
 import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wilton.mobiauto_backend_interview.config.JwtTokenProvider;
 import com.wilton.mobiauto_backend_interview.dto.ErrorDTO;
 import com.wilton.mobiauto_backend_interview.dto.PostResponseDTO;
+import com.wilton.mobiauto_backend_interview.dto.UploadProfilePhotoDto;
 import com.wilton.mobiauto_backend_interview.dto.UserCreationDTO;
 import com.wilton.mobiauto_backend_interview.dto.UserDTO;
 import com.wilton.mobiauto_backend_interview.entity.User;
@@ -72,5 +76,24 @@ public class UserController {
         String username = jwtTokenProvider.getUsername(accessToken);
         UserDTO userDTO = userService.getUser(username);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/users/me/profile-photo", consumes = "image/jpeg")
+    public ResponseEntity<UploadProfilePhotoDto> updateProfilePhoto(@RequestBody byte[] rawRequestBody, @CookieValue(value = "accessToken", required = false) String accessToken) throws IOException {
+        if (accessToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        String username = jwtTokenProvider.getUsername(accessToken);
+        File imageFile = new File("D:\\opt\\mobiauto-backend-interview\\profile-photos\\" + username + ".jpg");
+        imageFile.createNewFile();
+
+        FileOutputStream output = new FileOutputStream(imageFile);
+        output.write(rawRequestBody);
+
+        UploadProfilePhotoDto uploadProfilePhotoDto = new UploadProfilePhotoDto();
+        uploadProfilePhotoDto.setProfilePhoto(imageFile.getName());
+
+        return new ResponseEntity<UploadProfilePhotoDto>(uploadProfilePhotoDto, HttpStatus.OK);
     }
 }
