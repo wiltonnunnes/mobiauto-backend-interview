@@ -47,13 +47,17 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public UserDTO getUser(String email) {
-        User user = userRepository.findByEmail(email).get();
+    public UserDTO getUser(String username) {
+        User user = userRepository.findByUsername(username).get();
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return userDTO;
     }
 
     public List<UserDTO> getAll() {
         return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 }
