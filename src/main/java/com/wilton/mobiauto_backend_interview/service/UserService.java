@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.wilton.mobiauto_backend_interview.entity.Role;
 import com.wilton.mobiauto_backend_interview.entity.User;
 import com.wilton.mobiauto_backend_interview.repository.RoleRepository;
 import com.wilton.mobiauto_backend_interview.repository.UserRepository;
+import com.wilton.mobiauto_backend_interview.specification.UserSpecification;
 
 @Service
 public class UserService {
@@ -53,8 +55,11 @@ public class UserService {
         return userDTO;
     }
 
-    public List<UserDTO> getAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+    public List<UserDTO> getAll(String name) {
+        Specification<User> userSpec = Specification
+            .where(UserSpecification.nameContainsWithIgnoreCase(name))
+            .or(UserSpecification.usernameContainsWithIgnoreCase(name));
+        return userRepository.findAll(userSpec).stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
     }
 
     public User updateUser(User user) {

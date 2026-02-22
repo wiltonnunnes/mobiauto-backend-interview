@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wilton.mobiauto_backend_interview.config.JwtTokenProvider;
@@ -48,8 +49,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/users")
-    List<UserDTO> all() {
-        return userService.getAll();
+    List<UserDTO> getUsers(@RequestParam String name) {
+        return userService.getAll(name);
     }
 
     @PostMapping("/registration")
