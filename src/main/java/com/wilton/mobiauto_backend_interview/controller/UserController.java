@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping("/users")
     List<UserDTO> getUsers(@RequestParam String name) {
         return userService.getAll(name);
@@ -81,7 +85,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         String username = jwtTokenProvider.getUsername(accessToken);
-        UserDTO userDTO = userService.getUser(username);
+        User user = userService.getUser(username);
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 

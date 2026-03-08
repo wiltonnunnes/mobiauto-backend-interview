@@ -49,10 +49,9 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public UserDTO getUser(String username) {
+    public User getUser(String username) {
         User user = userRepository.findByUsername(username).get();
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return userDTO;
+        return user;
     }
 
     public List<UserDTO> getAll(String name) {

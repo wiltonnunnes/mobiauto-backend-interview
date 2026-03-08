@@ -31,6 +31,15 @@ public class Message {
 
     private LocalDateTime time;
 
+    public Message() {}
+
+    public Message(User sender, User receiver, String content, LocalDateTime time) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.content = content;
+        this.time = time;
+    }
+
     public LocalDateTime getTime() {
         return time;
     }
