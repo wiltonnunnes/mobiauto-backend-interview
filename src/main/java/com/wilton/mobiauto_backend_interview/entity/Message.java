@@ -1,11 +1,14 @@
 package com.wilton.mobiauto_backend_interview.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,44 +19,48 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private User from;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private User sender;
 
-    private User to;
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 
-    private String message;
+    private String content;
 
-    private Date time;
+    private LocalDateTime time;
 
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public User getTo() {
-        return to;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setTo(User to) {
-        this.to = to;
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
-    public User getFrom() {
-        return from;
+    public User getSender() {
+        return sender;
     }
 
-    public void setFrom(User from) {
-        this.from = from;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
     public Long getId() {

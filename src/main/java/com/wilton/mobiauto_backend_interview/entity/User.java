@@ -52,11 +52,6 @@ public class User {
 
     private String profilePhoto;
 
-    /* 
-    @Column(nullable = false)
-    private LocalDate birthday;
-    */
-
     public User() {}
 
     public User(String name, String email, String password, String username) {
@@ -128,17 +123,7 @@ public class User {
 
     public void setProfilePhoto(String profilePhoto) {
         this.profilePhoto = profilePhoto;
-    }
-
-    /* 
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-    */    
+    } 
 
     public String getUsername() {
         return username;
