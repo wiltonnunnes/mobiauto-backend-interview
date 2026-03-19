@@ -64,4 +64,9 @@ public class UserService {
     public User updateUser(User user) {
         return userRepository.save(user);
     }
+
+    public User getUser(Long id) {
+        Optional<User> optional = userRepository.findById(id);
+        return optional.orElse(null);
+    }
 }

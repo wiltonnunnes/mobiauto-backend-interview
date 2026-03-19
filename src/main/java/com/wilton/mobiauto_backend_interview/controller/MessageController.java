@@ -3,11 +3,14 @@ package com.wilton.mobiauto_backend_interview.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.wilton.mobiauto_backend_interview.dto.MessageCreationDTO;
 import com.wilton.mobiauto_backend_interview.entity.Message;
@@ -37,6 +40,12 @@ public class MessageController {
         Message message = new Message(sender, receiver, messageDTO.getContent(), messageDTO.getTime());
         messageRepository.save(message);
         return "Message successfully saved";
+    }
+
+    @GetMapping
+    public ResponseEntity<Message> getMessages(@RequestParam(name = "other-id") Long otherId, Principal principal) {
+        User sender = userService.getUser(principal.getName());
+        return null;
     }
 
 }
