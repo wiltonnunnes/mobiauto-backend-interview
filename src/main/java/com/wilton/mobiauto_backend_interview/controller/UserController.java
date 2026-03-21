@@ -80,23 +80,16 @@ public class UserController {
     }
 
     @GetMapping("/users/me")
-    public ResponseEntity<UserDTO> currentUserData(Principal principal, @CookieValue(value = "accessToken", required = false) String accessToken) {
-        if (accessToken == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        String username = jwtTokenProvider.getUsername(accessToken);
+    public ResponseEntity<UserDTO> currentUserData(Principal principal) {
+        String username = principal.getName();
         User user = userService.getUser(username);
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
     }
 
     @PostMapping(value = "/users/me/profile-photo", consumes = "image/jpeg")
-    public ResponseEntity<UploadProfilePhotoDto> updateProfilePhoto(@RequestBody byte[] rawRequestBody, @CookieValue(value = "accessToken", required = false) String accessToken) throws IOException {
-        if (accessToken == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
-        String username = jwtTokenProvider.getUsername(accessToken);
+    public ResponseEntity<UploadProfilePhotoDto> updateProfilePhoto(@RequestBody byte[] rawRequestBody, Principal principal) throws IOException {
+        String username = principal.getName();
         File imageFile = new File("D:\\mobiauto-backend-interview-uploads\\profile-photos\\" + username + ".jpg");
         imageFile.createNewFile();
 

@@ -1,6 +1,7 @@
 package com.wilton.mobiauto_backend_interview.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import com.wilton.mobiauto_backend_interview.entity.Message;
 import com.wilton.mobiauto_backend_interview.entity.User;
 import com.wilton.mobiauto_backend_interview.repository.MessageRepository;
 import com.wilton.mobiauto_backend_interview.repository.UserRepository;
+import com.wilton.mobiauto_backend_interview.service.MessageService;
 import com.wilton.mobiauto_backend_interview.service.UserService;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", maxAge = 3600)
@@ -32,6 +34,9 @@ public class MessageController {
 
     @Autowired
     private MessageRepository messageRepository;
+
+    @Autowired
+    private MessageService messageService;
     
     @PostMapping
     public String create(Principal principal, @RequestBody MessageCreationDTO messageDTO) {
@@ -43,9 +48,10 @@ public class MessageController {
     }
 
     @GetMapping
-    public ResponseEntity<Message> getMessages(@RequestParam(name = "other-id") Long otherId, Principal principal) {
-        User sender = userService.getUser(principal.getName());
-        return null;
+    public List<Message> getMessages(Principal principal, @RequestParam(name = "other-id") Long otherId) {
+        User userLogged = userService.getUser(principal.getName());
+        User other = userService.getUser(otherId);
+        return messageService.getMessages(userLogged, other);
     }
 
 }

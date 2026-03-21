@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(
-                auth -> auth.requestMatchers("/registration", "/login", "/users/**", "/images/**", "/external-files/**").permitAll()
+                auth -> auth.requestMatchers("/registration", "/login", "/images/**", "/external-files/**").permitAll()
                     .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults())
