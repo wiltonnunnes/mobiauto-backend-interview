@@ -25,4 +25,12 @@ public class MessageService {
             .and(MessageSpecification.isReceiverId(user1.getId()));
         return messageRepository.findAll(messageSpec);
     }
+
+    public List<Message> getMessages() {
+        return messageRepository.findAll();
+    }
+
+    public Message addMessage(Message message) {
+        return messageRepository.save(message);
+    }
 }
