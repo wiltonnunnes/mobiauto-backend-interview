@@ -3,6 +3,7 @@ package com.wilton.mobiauto_backend_interview.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,16 @@ public class MessageService {
     private MessageRepository messageRepository;
     
     public List<Message> getMessages(User user1, User user2) {
-        Specification<Message> messageSpec = Specification
-            .where(MessageSpecification.isSenderId(user1.getId()))
-            .and(MessageSpecification.isReceiverId(user2.getId()))
-            .or(MessageSpecification.isSenderId(user2.getId()))
-            .and(MessageSpecification.isReceiverId(user1.getId()));
-        return messageRepository.findAll(messageSpec);
+        Specification<Message> messagesFromUser1toUser2 = Specification
+            .where(MessageSpecification.isSender(user1))
+            .and(MessageSpecification.isReceiver(user2));
+            
+        Specification<Message> messagesFromUser2toUser1 = Specification
+            .where(MessageSpecification.isSender(user2))
+            .and(MessageSpecification.isReceiver(user1));
+
+        Specification<Message> messageSpec = messagesFromUser1toUser2.or(messagesFromUser2toUser1);
+        return messageRepository.findAll(messageSpec, Sort.by(Sort.Direction.DESC, "time"));
     }
 
     public List<Message> getMessages() {

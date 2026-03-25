@@ -2,6 +2,7 @@ package com.wilton.mobiauto_backend_interview.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,10 @@ public class MessageController {
     }
 
     @GetMapping
-    public List<Message> getMessages(Principal principal, @RequestParam(name = "other-id") Long otherId) {
+    public List<MessageDTO> getMessages(Principal principal, @RequestParam(name = "other-id") Long otherId) {
         User userLogged = userService.getUser(principal.getName());
         User other = userService.getUser(otherId);
-        return messageService.getMessages(userLogged, other);
+        return messageService.getMessages(userLogged, other).stream().map(message -> modelMapper.map(message, MessageDTO.class)).collect(Collectors.toList());
     }
 
 }
