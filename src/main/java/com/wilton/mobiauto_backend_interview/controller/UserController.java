@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,5 +105,11 @@ public class UserController {
         userService.updateUser(user);
 
         return new ResponseEntity<UploadProfilePhotoDto>(uploadProfilePhotoDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{id}")
+    public UserDTO getUser(@PathVariable Long id) {
+        User user = userService.getUser(id);
+        return modelMapper.map(user, UserDTO.class);
     }
 }
