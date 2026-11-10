@@ -1,7 +1,40 @@
 package com.wilton.mobiauto_backend_interview.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.wilton.mobiauto_backend_interview.dto.VideoDTO;
+import com.wilton.mobiauto_backend_interview.entity.Video;
+import com.wilton.mobiauto_backend_interview.repository.VideoRepository;
+
+@RestController 
+@RequestMapping("/videos")
 public class VideoController {
-    
+
+    private final ModelMapper modelMapper;
+
+    private final VideoRepository repository;
+
+    public VideoController(ModelMapper modelMapper, VideoRepository repository) {
+        this.modelMapper = modelMapper;
+        this.repository = repository;
+        TypeMap<Video, VideoDTO> propertyMapper = this.modelMapper.createTypeMap(Video.class, VideoDTO.class);
+        propertyMapper.addMappings(
+            mapper -> mapper.map(src -> encodeId(src.getId()), VideoDTO::setId)
+        );
+    }
+
+    @GetMapping 
+    public List<VideoDTO> getVideos() {
+        return repository.findAll().stream().map(video -> modelMapper.map(video, VideoDTO.class)).collect(Collectors.toList());
+    }
+
     private static String encodeId(Long id) {
         String out = "";
         String index = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";

@@ -8,6 +8,12 @@ public class VideoDTO {
 
     private UserDTO user;
 
+    public VideoDTO(String id, String title, UserDTO user) {
+        this.id = id;
+        this.title = title;
+        this.user = user;
+    }
+
     public UserDTO getUser() {
         return user;
     }
