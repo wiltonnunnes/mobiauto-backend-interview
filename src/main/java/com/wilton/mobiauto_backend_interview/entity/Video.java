@@ -1,15 +1,20 @@
 package com.wilton.mobiauto_backend_interview.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity(name = "video")
 @Table(name = "videos")
 public class Video {
-    
-    private String title;
 
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String title;
 
     private User user;
 
