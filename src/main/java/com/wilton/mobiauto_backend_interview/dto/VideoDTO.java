@@ -2,7 +2,7 @@ package com.wilton.mobiauto_backend_interview.dto;
 
 public class VideoDTO {
 
-    private String id;
+    private String videoId;
 
     private String title;
 
@@ -10,8 +10,8 @@ public class VideoDTO {
 
     public VideoDTO() {}
 
-    public VideoDTO(String id, String title, UserDTO user) {
-        this.id = id;
+    public VideoDTO(String videoId, String title, UserDTO user) {
+        this.videoId = videoId;
         this.title = title;
         this.user = user;
     }
@@ -24,12 +24,12 @@ public class VideoDTO {
         this.user = user;
     }
 
-    public String getId() {
-        return id;
+    public String getVideoId() {
+        return videoId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 
     public String getTitle() {
