@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,17 +14,20 @@ import com.wilton.mobiauto_backend_interview.dto.VideoDTO;
 import com.wilton.mobiauto_backend_interview.entity.Video;
 import com.wilton.mobiauto_backend_interview.repository.VideoRepository;
 
+import jakarta.annotation.PostConstruct;
+
 @RestController 
 @RequestMapping("/videos")
 public class VideoController {
 
-    private final ModelMapper modelMapper;
+    @Autowired 
+    private ModelMapper modelMapper;
 
-    private final VideoRepository repository;
+    @Autowired
+    private VideoRepository repository;
 
-    public VideoController(ModelMapper modelMapper, VideoRepository repository) {
-        this.modelMapper = modelMapper;
-        this.repository = repository;
+    @PostConstruct 
+    private void postConstruct() {
         TypeMap<Video, VideoDTO> propertyMapper = this.modelMapper.createTypeMap(Video.class, VideoDTO.class);
         propertyMapper.addMappings(
             mapper -> mapper.map(src -> encodeId(src.getId()), VideoDTO::setId)

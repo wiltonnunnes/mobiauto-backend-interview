@@ -8,6 +8,8 @@ public class VideoDTO {
 
     private UserDTO user;
 
+    public VideoDTO() {}
+
     public VideoDTO(String id, String title, UserDTO user) {
         this.id = id;
         this.title = title;
